@@ -43,4 +43,13 @@ public class ControladorUsuario {
                 }).orElseThrow(() ->new UsuarioNaoEncontradoExcecao(id));
     }
 
+    @DeleteMapping("/usuario/{id}")
+    String deletaUsuario(@PathVariable Long id){
+        if(!repositorioUsuario.existsById(id)){
+            throw new UsuarioNaoEncontradoExcecao(id);
+        }
+        repositorioUsuario.deleteById(id);
+        return "Usuario com o id"+ id + "foi deletado";
+    }
+
 }
