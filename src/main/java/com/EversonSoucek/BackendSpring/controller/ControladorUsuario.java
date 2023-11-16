@@ -32,4 +32,15 @@ public class ControladorUsuario {
 
     }
 
+    @PutMapping("/usuario/{id}")
+    Usuario editaUsuario(@RequestBody Usuario novoUsuario,@PathVariable Long id){
+        return repositorioUsuario.findById(id)
+                .map(usuario -> {
+                    usuario.setNomeDeUsuario(novoUsuario.getNomeDeUsuario());
+                    usuario.setNome(novoUsuario.getNome());
+                    usuario.setEmail(novoUsuario.getEmail());
+                    return repositorioUsuario.save(usuario);
+                }).orElseThrow(() ->new UsuarioNaoEncontradoExcecao(id));
+    }
+
 }
